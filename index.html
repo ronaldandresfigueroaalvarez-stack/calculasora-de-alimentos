@@ -109,7 +109,7 @@
         .val-green { color: #2e7d32; }
         .val-blue { color: #0275d8; }
 
-        /* Pantalla del Candado */
+        /* Pantalla de Bloqueo (Candado) */
         #lock-screen {
             position: fixed;
             top: 0; left: 0; width: 100%; height: 100%;
@@ -228,13 +228,13 @@
             let cerdos = parseFloat(document.getElementById('num-cerdos').value) || 0;
             let tasa = parseFloat(document.getElementById('etapa-desarrollo').value);
             
-            // Cálculos del bloque rojo
+            // Bloque Rojo
             let totalDiario = cerdos * tasa;
             let sacos = totalDiario / 40;
             document.getElementById('cons-diario').innerText = totalDiario.toFixed(2) + " Kg";
             document.getElementById('sacos-diario').innerText = sacos.toFixed(2) + " Sacos";
 
-            // Cálculos del bloque verde (Metas)
+            // Bloque Verde
             let pesoBase = 6.00;
             if (tasa === 0.45) pesoBase = 7.33;
             if (tasa === 0.70) pesoBase = 10.50;
@@ -255,7 +255,7 @@
             else { estado.innerText = "En desarrollo óptimo"; }
         }
 
-        // Candado mensual
+        // Sistema de claves automáticas por mes
         const clavesMensuales = {
             0: "porcinoenero", 1: "porcinofebrero", 2: "porcinomarzo", 3: "porcinoabril",
             4: "porcinomayo", 5: "porcinojunio", 6: "porcinojulio", 7: "porcinoagosto",
