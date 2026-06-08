@@ -98,13 +98,31 @@
         .res-alimento { background-color: #ffebe6; border-left: 5px solid #d9534f; margin-bottom: 15px; }
         .res-metas { background-color: #eaf5ea; border-left: 5px solid #4caf50; }
         .res-pesaje { background-color: #e6f2ff; border-left: 5px solid #0275d8; }
+        
+        /* Ajuste para evitar que la información se corte en celulares */
         .res-row {
             display: flex;
             justify-content: space-between;
+            align-items: center;
             margin-bottom: 8px;
+            gap: 10px;
+            flex-wrap: nowrap; /* Fuerza a que se mantenga en una sola línea */
         }
         .res-row:last-child { margin-bottom: 0; }
-        .res-val { font-weight: bold; }
+        
+        /* Asegura que las etiquetas de texto no se corten */
+        .res-row span:first-child {
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            font-size: 13px; /* Un puntito más pequeña para que quepa en el móvil */
+        }
+        
+        .res-val { 
+            font-weight: bold; 
+            white-space: nowrap;
+            font-size: 13px;
+        }
         .val-red { color: #d9534f; }
         .val-green { color: #2e7d32; }
         .val-blue { color: #0275d8; }
@@ -125,7 +143,6 @@
 </head>
 <body>
 
-    <!-- REQUISITO DE ACCESO MENSUAL -->
     <div id="lock-screen">
         <div class="container" style="text-align: center;">
             <h2>🔓 Acceso Requerido</h2>
@@ -138,7 +155,6 @@
         </div>
     </div>
 
-    <!-- INTERFAZ PRINCIPAL -->
     <div class="container">
         <h1>CONTROL PORCINO PRO</h1>
         <div class="subtitle">Gestión unificada: Alimento, Pesaje y Medicación</div>
@@ -150,7 +166,6 @@
             <button class="tab-btn" onclick="switchTab('costos')">💰 Costos</button>
         </div>
 
-        <!-- RECUADROS DE LA PESTAÑA ALIMENTO -->
         <div id="alimento" class="tab-content active">
             <div class="form-group">
                 <label>Número de Cerdos en Corral:</label>
@@ -166,7 +181,6 @@
                 </select>
             </div>
             
-            <!-- BLOQUE ROJO CORREGIDO (YA REPARADO AQUÍ) -->
             <div class="result-box res-alimento">
                 <div class="res-row">
                     <span>Consumo Diario Total:</span>
@@ -178,7 +192,6 @@
                 </div>
             </div>
 
-            <!-- BLOQUE VERDE -->
             <div class="result-box res-metas">
                 <div class="res-row">
                     <span>Peso Inicial de Tabla:</span>
@@ -195,12 +208,10 @@
             </div>
         </div>
 
-        <!-- MÓDULO BODEGA -->
         <div id="bodega" class="tab-content">
             <p style="color: #666; font-size: 14px; text-align: center;">Inventario de sacos disponible en corral.</p>
         </div>
 
-        <!-- MÓDULO PESAJE -->
         <div id="pesaje" class="tab-content">
             <div class="form-group">
                 <label>Peso Promedio Actual (Kg):</label>
@@ -218,7 +229,6 @@
             </div>
         </div>
 
-        <!-- MÓDULO COSTOS -->
         <div id="costos" class="tab-content">
             <p style="color: #666; font-size: 14px; text-align: center;">Módulo de análisis de costos de alimento y rentabilidad.</p>
         </div>
@@ -236,13 +246,11 @@
             let cerdos = parseFloat(document.getElementById('num-cerdos').value) || 0;
             let tasa = parseFloat(document.getElementById('etapa-desarrollo').value);
             
-            // Lógica bloque rojo
             let totalDiario = cerdos * tasa;
             let sacos = totalDiario / 40;
             document.getElementById('cons-diario').innerText = totalDiario.toFixed(2) + " Kg";
             document.getElementById('sacos-diario').innerText = sacos.toFixed(2) + " Sacos";
 
-            // Lógica bloque verde
             let pesoBase = 6.00;
             if (tasa === 0.45) pesoBase = 7.33;
             if (tasa === 0.70) pesoBase = 10.50;
@@ -263,7 +271,6 @@
             else { estado.innerText = "En desarrollo óptimo"; }
         }
 
-        // Validación de claves
         const clavesMensuales = {
             0: "porcinoenero", 1: "porcinofebrero", 2: "porcinomarzo", 3: "porcinoabril",
             4: "porcinomayo", 5: "porcinojunio", 6: "porcinojulio", 7: "porcinoagosto",
