@@ -109,7 +109,7 @@
         .val-green { color: #2e7d32; }
         .val-blue { color: #0275d8; }
 
-        /* Candado */
+        /* Pantalla del Candado */
         #lock-screen {
             position: fixed;
             top: 0; left: 0; width: 100%; height: 100%;
@@ -121,90 +121,10 @@
             padding: 10px;
             box-sizing: border-box;
         }
-
-        /* Asistente Flotante */
-        #chat-widget {
-            position: fixed;
-            bottom: 20px;
-            right: 20px;
-            z-index: 9999;
-        }
-        #chat-button {
-            width: 55px;
-            height: 55px;
-            background-color: #8c4f3e;
-            border-radius: 50%;
-            border: none;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
-            color: white;
-            font-size: 24px;
-            cursor: pointer;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-        }
-        #chat-window {
-            width: 300px;
-            height: 380px;
-            background: white;
-            border-radius: 15px;
-            box-shadow: 0 5px 25px rgba(0,0,0,0.15);
-            position: absolute;
-            bottom: 70px;
-            right: 0;
-            display: none;
-            flex-direction: column;
-            overflow: hidden;
-            border: 1px solid #e6dfc3;
-        }
-        #chat-header {
-            background-color: #4a3b2c;
-            color: white;
-            padding: 12px;
-            font-weight: bold;
-            font-size: 13px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-        #chat-messages {
-            flex: 1;
-            padding: 10px;
-            overflow-y: auto;
-            background-color: #faf8f5;
-            font-size: 13px;
-            display: flex;
-            flex-direction: column;
-        }
-        .msg { margin-bottom: 10px; padding: 8px 12px; border-radius: 10px; max-width: 85%; }
-        .msg.bot { background-color: #efe9d4; align-self: flex-start; color: #333; }
-        .msg.user { background-color: #8c4f3e; color: white; align-self: flex-end; }
-        #chat-input-container {
-            display: flex;
-            border-top: 1px solid #eee;
-            padding: 5px;
-            background: #fff;
-        }
-        #chat-input {
-            flex: 1;
-            border: none;
-            padding: 8px;
-            outline: none;
-            font-size: 13px;
-        }
-        #chat-send {
-            background: none;
-            border: none;
-            color: #8c4f3e;
-            font-weight: bold;
-            cursor: pointer;
-            padding: 0 8px;
-        }
     </style>
 </head>
 <body>
 
-    <!-- PANTALLA DE CANDADO -->
     <div id="lock-screen">
         <div class="container" style="text-align: center;">
             <h2>🔓 Acceso Requerido</h2>
@@ -213,11 +133,10 @@
                 <input type="password" id="pass-input" placeholder="Contraseña">
             </div>
             <button onclick="verificarCandado()" style="background-color: #8c4f3e; color: white; border: none; padding: 12px 30px; border-radius: 10px; font-weight: bold; cursor: pointer; width: 100%;">Ingresar</button>
-            <p id="lock-error" style="color: red; font-size: 13px; margin-top: 10px; display: none;">Contraseña incorrecta.</p>
+            <p id="lock-error" style="color: red; font-size: 13px; margin-top: 10px; display: none;">Contraseña incorrecta o vencida.</p>
         </div>
     </div>
 
-    <!-- CONTENIDO PRINCIPAL COMPLETO -->
     <div class="container">
         <h1>CONTROL PORCINO PRO</h1>
         <div class="subtitle">Gestión unificada: Alimento, Pesaje y Medicación</div>
@@ -229,7 +148,6 @@
             <button class="tab-btn" onclick="switchTab('costos')">💰 Costos</button>
         </div>
 
-        <!-- PESTAÑA ALIMENTO REPARADA -->
         <div id="alimento" class="tab-content active">
             <div class="form-group">
                 <label>Número de Cerdos en Corral:</label>
@@ -245,7 +163,6 @@
                 </select>
             </div>
             
-            <!-- BLOQUE ROJO: CONSUMOS -->
             <div class="result-box res-alimento">
                 <div class="res-row">
                     <span>Consumo Diario Total:</span>
@@ -257,7 +174,6 @@
                 </div>
             </div>
 
-            <!-- BLOQUE VERDE RESTAURADO: COMPONENTES DE PESOS Y METAS -->
             <div class="result-box res-metas">
                 <div class="res-row">
                     <span>Peso Inicial de Tabla:</span>
@@ -274,7 +190,6 @@
             </div>
         </div>
 
-        <!-- OTRAS PESTAÑAS -->
         <div id="bodega" class="tab-content">
             <p style="color: #666; font-size: 14px; text-align: center;">Inventario de sacos disponible en corral.</p>
         </div>
@@ -301,24 +216,6 @@
         </div>
     </div>
 
-    <!-- ASISTENTE FLOTANTE IA -->
-    <div id="chat-widget">
-        <button id="chat-button" onclick="toggleChat()">💬</button>
-        <div id="chat-window">
-            <div id="chat-header">
-                <span>Asistente Porcino IA</span>
-                <span style="cursor:pointer;" onclick="toggleChat()">✖</span>
-            </div>
-            <div id="chat-messages">
-                <div class="msg bot">¡Hola! Soy tu asistente porcino. ¿En qué te puedo ayudar hoy?</div>
-            </div>
-            <div id="chat-input-container">
-                <input type="text" id="chat-input" placeholder="Escribe tu consulta..." onkeypress="checkEnter(event)">
-                <button id="chat-send" onclick="sendChatMessage()">Enviar</button>
-            </div>
-        </div>
-    </div>
-
     <script>
         function switchTab(tabId) {
             document.querySelectorAll('.tab-content').forEach(tab => tab.classList.remove('active'));
@@ -327,18 +224,17 @@
             event.currentTarget.classList.add('active');
         }
 
-        // Función corregida que calcula consumos y actualiza todas las metas
         function calcularTodo() {
             let cerdos = parseFloat(document.getElementById('num-cerdos').value) || 0;
             let tasa = parseFloat(document.getElementById('etapa-desarrollo').value);
             
-            // Cálculos de alimento
+            // Cálculos del bloque rojo
             let totalDiario = cerdos * tasa;
             let sacos = totalDiario / 40;
             document.getElementById('cons-diario').innerText = totalDiario.toFixed(2) + " Kg";
             document.getElementById('sacos-diario').innerText = sacos.toFixed(2) + " Sacos";
 
-            // Recálculo dinámico de componentes según la etapa
+            // Cálculos del bloque verde (Metas)
             let pesoBase = 6.00;
             if (tasa === 0.45) pesoBase = 7.33;
             if (tasa === 0.70) pesoBase = 10.50;
@@ -359,6 +255,7 @@
             else { estado.innerText = "En desarrollo óptimo"; }
         }
 
+        // El Candado de Seguridad Mensual que ya tenías
         const clavesMensuales = {
             0: "porcinoenero", 1: "porcinofebrero", 2: "porcinomarzo", 3: "porcinoabril",
             4: "porcinomayo", 5: "porcinojunio", 6: "porcinojulio", 7: "porcinoagosto",
@@ -373,36 +270,6 @@
             } else {
                 document.getElementById('lock-error').style.display = 'block';
             }
-        }
-
-        function toggleChat() {
-            const wc = document.getElementById('chat-window');
-            wc.style.display = (wc.style.display === 'none' || wc.style.display === '') ? 'flex' : 'none';
-        }
-
-        function checkEnter(e) { if (e.key === 'Enter') { sendChatMessage(); } }
-
-        function sendChatMessage() {
-            const input = document.getElementById('chat-input');
-            const texto = input.value.trim();
-            if (!texto) return;
-
-            const container = document.getElementById('chat-messages');
-            const userMsg = document.createElement('div');
-            userMsg.className = 'msg user';
-            userMsg.innerText = texto;
-            container.appendChild(userMsg);
-            
-            input.value = '';
-            container.scrollTop = container.scrollHeight;
-
-            setTimeout(() => {
-                const botMsg = document.createElement('div');
-                botMsg.className = 'msg bot';
-                botMsg.innerText = "Entendido. Procesando datos para tus recomendaciones...";
-                container.appendChild(botMsg);
-                container.scrollTop = container.scrollHeight;
-            }, 1000);
         }
     </script>
 </body>
